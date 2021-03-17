@@ -6,13 +6,18 @@ class CandidateGenerator():
         """ Init indexes based on init_state string and vocabulary list"""
         self._vocabulary_=vocabulary
         self._init_state_=init_state
+        self._indexes_=[]
         self.set_state(init_state)
 
     def set_state(self, new_state):
         """Reset indexes based on new_state string and existing vocabulary"""
-        self._indexes_=[]
+        self._indexes_.clear()
         for char in new_state:
             self._indexes_.append(self._vocabulary_.index(char))
+
+    def get_state(self):
+        state = [self._vocabulary_[x] for x in self._indexes_]
+        return ''.join(state)
 
     def generate(self):
         """Increment and then return current state or None if end was reached"""
