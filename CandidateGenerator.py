@@ -5,6 +5,7 @@ class CandidateGenerator():
     def __init__(self, vocabulary, init_state):
         """ Init indexes based on init_state string and vocabulary list"""
         self._vocabulary_=vocabulary
+        self._vocab_length_ = len(vocabulary)
         self._init_state_=init_state
         self._indexes_=[]
         self.set_state(init_state)
@@ -29,17 +30,16 @@ class CandidateGenerator():
         
     def _increment_(self):
         """Try to increment. Return True if possible else False"""
-        vocab_length = len(self._vocabulary_)
-        if self._indexes_[-1]>=vocab_length:
+        if self._indexes_[-1]>=self._vocab_length_:
             return False
         self._indexes_[0]+=1
         for i in range(len(self._indexes_)-1):
-            if self._indexes_[i]>=vocab_length:
+            if self._indexes_[i]>=self._vocab_length_:
                 self._indexes_[i]=0
                 self._indexes_[i+1]+=1
             else:
                 break
-        return self._indexes_[-1]<vocab_length
+        return self._indexes_[-1]<self._vocab_length_
 
 
 if __name__=="__main__":

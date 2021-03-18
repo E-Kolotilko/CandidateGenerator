@@ -13,6 +13,7 @@ class LimitedCandidateGenerator():
         rincrement - optional increment direction bool. True-> aaa, aab, aac,... False-> aaa, baa, caa,... 
         """
         self._vocabulary_=vocabulary
+        self._vocab_length_ = len(vocabulary)
         self._init_state_=init_state
         self._rincrement_=rincrement
         self._indexes_=[]
@@ -63,11 +64,10 @@ class LimitedCandidateGenerator():
         """Try to increment. Return True if was possible else False"""
         if self._indexes_ == self._end_indexes_:
             return False
-        vocab_length = len(self._vocabulary_)
         if (self._rincrement_):
             self._indexes_[-1]+=1
             for i in range(len(self._indexes_)-1,0,-1):
-                if self._indexes_[i]>=vocab_length:
+                if self._indexes_[i]>=self._vocab_length_:
                     self._indexes_[i]=0
                     self._indexes_[i-1]+=1
                 else:
@@ -75,7 +75,7 @@ class LimitedCandidateGenerator():
         else:
             self._indexes_[0]+=1
             for i in range(len(self._indexes_)-1):
-                if self._indexes_[i]>=vocab_length:
+                if self._indexes_[i]>=self._vocab_length_:
                     self._indexes_[i]=0
                     self._indexes_[i+1]+=1
                 else:
